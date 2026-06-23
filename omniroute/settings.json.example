@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration",
+  "_comment": "Claude Code settings for OmniRoute. Copy to .claude/settings.json (project root). Provider keys are managed in the OmniRoute dashboard (http://localhost:20128) — not here.",
+  "_warning": "Template only — copy to .claude/settings.json to activate. Do NOT commit real secrets to version control.",
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:20128/v1",
+
+    "_auth_note": "OmniRoute handles provider auth internally via its dashboard. The token below is a placeholder — any non-empty value works if OmniRoute has no API key configured, or set it to your OmniRoute API key if you enabled one.",
+    "ANTHROPIC_AUTH_TOKEN": "dummy",
+
+    "_model_note": "Use 'auto' to let OmniRoute pick the best provider automatically (cost-optimized, fallback, etc.). You can also set a specific provider/model from the dashboard.",
+    "ANTHROPIC_MODEL": "auto"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm test)",
+      "Bash(npm run build)",
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)",
+      "Bash(sudo *)",
+      "Bash(curl * | bash)"
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+# ──────────────────────────────────────────────────────────────────────
+#  OmniRoute — Docker Compose
+# ──────────────────────────────────────────────────────────────────────
+#
+#  Free AI gateway: one Anthropic-compatible endpoint, 227 providers,
+#  50+ free tiers, auto-fallback, token compression.
+#
+#  Quick start:
+#    1. cp .env.example .env  # fill in the secrets
+#    2. docker compose up -d
+#    3. Open http://localhost:20128 → dashboard → add providers
+#
+#  Claude Code integration:
+#    Point Claude Code at http://localhost:20128/v1 (see settings.json.example).
+#    Provider keys are managed inside the OmniRoute dashboard — no key needed
+#    on the Claude Code side.
+# ──────────────────────────────────────────────────────────────────────
+
+services:
+  # ── Redis (Rate Limiter Backend) ──────────────────────────────────
+  redis:
+    image: docker.io/library/redis:7-alpine
+    container_name: omniroute-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --save 60 1 --loglevel warning
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ── OmniRoute ─────────────────────────────────────────────────────
+  omniroute:
+    image: docker.io/diegosouzapw/omniroute:latest
+    container_name: omniroute
+    restart: unless-stopped
+    stop_grace_period: 40s
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      - PORT=${OMNIROUTE_PORT:-20128}
+      - HOSTNAME=0.0.0.0
+      - DATA_DIR=/app/data
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "${OMNIROUTE_PORT:-20128}:${OMNIROUTE_PORT:-20128}"
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "healthcheck.mjs"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  redis-data:
+    name: omniroute-redis-data
