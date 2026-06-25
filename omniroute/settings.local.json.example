@@ -1,7 +1,7 @@
 {
   "_comment": "Local-only Claude Code settings for OmniRoute. Copy to .claude/settings.local.json (gitignored). This file is for overrides you don't want to commit.",
   "env": {
-    "_note": "OmniRoute handles provider auth via its web dashboard. Set ANTHROPIC_AUTH_TOKEN to any non-empty value, or to your OmniRoute API key if you configured one in the dashboard.",
-    "ANTHROPIC_AUTH_TOKEN": "dummy"
+    "_note": "Generate an API key in OmniRoute dashboard → Settings → API Keys. Paste it here.",
+    "ANTHROPIC_AUTH_TOKEN": "sk-your-omniroute-api-key-here"
   }
 }

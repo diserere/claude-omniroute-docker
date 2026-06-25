@@ -5,8 +5,8 @@
   "env": {
     "ANTHROPIC_BASE_URL": "http://localhost:20128/v1",
 
-    "_auth_note": "OmniRoute handles provider auth internally via its dashboard. The token below is a placeholder — any non-empty value works if OmniRoute has no API key configured, or set it to your OmniRoute API key if you enabled one.",
-    "ANTHROPIC_AUTH_TOKEN": "dummy",
+    "_auth_note": "You MUST use an OmniRoute API key (generate in dashboard → Settings → API Keys). The placeholder 'dummy' won't work.",
+    "ANTHROPIC_AUTH_TOKEN": "sk-your-omniroute-api-key-here",
 
     "_model_note": "IMPORTANT: Do NOT use 'auto' — Claude Code doesn't support OmniRoute's auto-routing. Use a specific model from your dashboard (e.g., 'kr/minimax-m2.5', 'kiro/glm-5'). Find available models in OmniRoute dashboard → Models.",
     "ANTHROPIC_MODEL": "kr/minimax-m2.5"

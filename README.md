@@ -19,7 +19,8 @@ Run [OmniRoute](https://github.com/diegosouzapw/OmniRoute) — a free AI gateway
 
 - **Claude Code** runs locally on your machine
 - **OmniRoute** runs in Docker, proxies requests to the best available provider
-- Provider keys are configured in the OmniRoute web dashboard — Claude Code only needs the base URL
+- Provider API keys are configured in the OmniRoute web dashboard
+- **You need an OmniRoute API key** (generated in dashboard → Settings → API Keys) for Claude Code authentication
 
 ## Quick Start
 
@@ -68,10 +69,11 @@ Copy the settings template to your project's `.claude/` directory:
 cp omniroute/settings.json.example .claude/settings.json
 ```
 
-If you want local overrides (not committed to git):
+Generate an OmniRoute API key in the dashboard (Settings → API Keys), then create local overrides:
 
 ```bash
 cp omniroute/settings.local.json.example .claude/settings.local.json
+# Edit .claude/settings.local.json and paste your API key into ANTHROPIC_AUTH_TOKEN
 ```
 
 ### 5. Run Claude Code
@@ -81,17 +83,16 @@ cd your-project
 claude
 ```
 
-Claude Code now routes through OmniRoute. The model is set to `auto` by default — OmniRoute picks the best available provider for each request.
+Claude Code now routes through OmniRoute. The default model is `kr/minimax-m2.5` — change it in `.claude/settings.json` if needed.
 
 ## Switching to a specific model
 
-In `.claude/settings.json`, change `ANTHROPIC_MODEL`:
+In `.claude/settings.json`, change `ANTHROPIC_MODEL`. Find available models in OmniRoute dashboard → Models:
 
 ```json
-"ANTHROPIC_MODEL": "auto/cheap"          // cheapest viable provider
-"ANTHROPIC_MODEL": "auto/coding"        // quality-first for coding
-"ANTHROPIC_MODEL": "auto/fast"          // lowest latency
-"ANTHROPIC_MODEL": "deepseek/deepseek-chat"  // specific provider/model
+"ANTHROPIC_MODEL": "kr/minimax-m2.5"      // default: MiniMax model via Kiro
+"ANTHROPIC_MODEL": "kiro/glm-5"           // GLM-5 via Kiro
+"ANTHROPIC_MODEL": "kiro/qwen3-coder-next" // Qwen3 Coder Next via Kiro
 ```
 
 See [OmniRoute docs](https://github.com/diegosouzapw/OmniRoute) for the full model routing guide.
