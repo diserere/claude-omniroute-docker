@@ -50,7 +50,7 @@ docker compose up -d
 Check health:
 
 ```bash
-curl http://localhost:20128/v1/health
+curl http://localhost:20128/status
 ```
 
 ### 3. Configure providers
