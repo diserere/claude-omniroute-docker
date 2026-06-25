@@ -1,7 +1,16 @@
-.claude/settings.local.json
+# Local environment
 .env
 .env.local
+
+# Claude Code settings with real API keys
+.claude/settings.json
+.claude/settings.local.json
+
+# Backups and logs
 *.bak
 *.log
 node_modules/
 .DS_Store
+
+# OmniRoute data (contains provider API keys and logs)
+omniroute/data/
